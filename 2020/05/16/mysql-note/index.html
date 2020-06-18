@@ -7,36 +7,191 @@
     error: 'Copy error',
     noSupport: 'The browser does not support'
   }
-} </script><meta name="generator" content="Hexo 4.2.0"></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#CHAR和VARCHAR的区别"><span class="toc-number">1.</span> <span class="toc-text">CHAR和VARCHAR的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DATETIME和TIMESTAMP的区别"><span class="toc-number">2.</span> <span class="toc-text">DATETIME和TIMESTAMP的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#时间类型DATETIME直接相减的结果"><span class="toc-number">3.</span> <span class="toc-text">时间类型DATETIME直接相减的结果</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HAVING和WHERE的不同使用场景"><span class="toc-number">4.</span> <span class="toc-text">HAVING和WHERE的不同使用场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#索引"><span class="toc-number">5.</span> <span class="toc-text">索引</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#索引类型"><span class="toc-number">5.1.</span> <span class="toc-text">索引类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用索引"><span class="toc-number">5.2.</span> <span class="toc-text">使用索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#B-TREE索引"><span class="toc-number">5.3.</span> <span class="toc-text">B+TREE索引</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#锁机制"><span class="toc-number">6.</span> <span class="toc-text">锁机制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#InnoDB引擎"><span class="toc-number">7.</span> <span class="toc-text">InnoDB引擎</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EXPLAIN用法"><span class="toc-number">8.</span> <span class="toc-text">EXPLAIN用法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#视图"><span class="toc-number">9.</span> <span class="toc-text">视图</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://raw.githubusercontent.com/yunnight/pics/master/blog_avatar.jpg"></div><div class="author-info__name text-center">yunnight</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">11</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">7</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">Categories</span><span class="pull-right">6</span></a></div></div></div><div id="content-outer"><div class="plain" id="top-container"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">yunnight</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> Search</span></a></span></div></div><div class="layout" id="content-inner"><article id="post"><div class="plain" id="post-title">MYSQL笔记</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-05-16</time><span class="post-meta__separator">|</span><i class="fa fa-inbox" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"> 数据库</a></div><div class="article-container" id="post-content"><h2 id="CHAR和VARCHAR的区别"><a href="#CHAR和VARCHAR的区别" class="headerlink" title="CHAR和VARCHAR的区别"></a>CHAR和VARCHAR的区别</h2><ol>
+} </script><meta name="generator" content="Hexo 4.2.0"></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#CHAR和VARCHAR的区别"><span class="toc-number">1.</span> <span class="toc-text">CHAR和VARCHAR的区别</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DATETIME和TIMESTAMP的区别"><span class="toc-number">2.</span> <span class="toc-text">DATETIME和TIMESTAMP的区别</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#时间类型DATETIME直接相减的结果"><span class="toc-number">3.</span> <span class="toc-text">时间类型DATETIME直接相减的结果</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#HAVING和WHERE的不同使用场景"><span class="toc-number">3.1.</span> <span class="toc-text">HAVING和WHERE的不同使用场景</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#时间函数"><span class="toc-number">4.</span> <span class="toc-text">时间函数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#事务"><span class="toc-number">5.</span> <span class="toc-text">事务</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#相关博客"><span class="toc-number">5.1.</span> <span class="toc-text">相关博客</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#存储引擎"><span class="toc-number">6.</span> <span class="toc-text">存储引擎</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#InnoDB"><span class="toc-number">6.1.</span> <span class="toc-text">InnoDB</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MyISAM"><span class="toc-number">6.2.</span> <span class="toc-text">MyISAM</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#锁机制"><span class="toc-number">7.</span> <span class="toc-text">锁机制</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#MyISAM的锁机制"><span class="toc-number">7.1.</span> <span class="toc-text">MyISAM的锁机制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#InnoDB的锁机制"><span class="toc-number">7.2.</span> <span class="toc-text">InnoDB的锁机制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#行锁"><span class="toc-number">7.3.</span> <span class="toc-text">行锁</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#意向锁"><span class="toc-number">7.3.1.</span> <span class="toc-text">意向锁</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#意向锁的兼容性"><span class="toc-number">7.3.1.1.</span> <span class="toc-text">意向锁的兼容性</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#意向锁的作用"><span class="toc-number">7.3.2.</span> <span class="toc-text">意向锁的作用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#死锁"><span class="toc-number">7.4.</span> <span class="toc-text">死锁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#推荐博客"><span class="toc-number">7.5.</span> <span class="toc-text">推荐博客</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#索引"><span class="toc-number">8.</span> <span class="toc-text">索引</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#索引类型"><span class="toc-number">8.1.</span> <span class="toc-text">索引类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用索引"><span class="toc-number">8.2.</span> <span class="toc-text">使用索引</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#B-Tree索引"><span class="toc-number">8.3.</span> <span class="toc-text">B+Tree索引</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MyISAM的B-Tree索引"><span class="toc-number">8.3.1.</span> <span class="toc-text">MyISAM的B+Tree索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#InnoDB的B-Tree索引"><span class="toc-number">8.3.2.</span> <span class="toc-text">InnoDB的B+Tree索引</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MyISAN和InnoDB的对比"><span class="toc-number">9.</span> <span class="toc-text">MyISAN和InnoDB的对比</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#EXPLAIN用法"><span class="toc-number">9.1.</span> <span class="toc-text">EXPLAIN用法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#视图"><span class="toc-number">9.2.</span> <span class="toc-text">视图</span></a></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://raw.githubusercontent.com/yunnight/pics/master/blog_avatar.jpg"></div><div class="author-info__name text-center">yunnight</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">11</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">7</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">Categories</span><span class="pull-right">6</span></a></div></div></div><div id="content-outer"><div class="plain" id="top-container"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">yunnight</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> Search</span></a></span></div></div><div class="layout" id="content-inner"><article id="post"><div class="plain" id="post-title">MYSQL笔记</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-05-16</time><span class="post-meta__separator">|</span><i class="fa fa-inbox" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"> 数据库</a></div><div class="article-container" id="post-content"><h1 id="CHAR和VARCHAR的区别"><a href="#CHAR和VARCHAR的区别" class="headerlink" title="CHAR和VARCHAR的区别"></a>CHAR和VARCHAR的区别</h1><ol>
 <li>CHAR(m)所占字节数都是m个字节，这表示CHAR(m)是固定长度；VARCHAR(m)所占字节数是实际长度+1个字节</li>
 <li>VARCHAR多出的一个字节是用来保存实际长度值</li>
 <li>因为CHAR无论存储的数据长度本身是多少，都会占用固定的长度，因此存储空间会有一定的浪费；VARCHAR由于是可变长度，更节约存储空间</li>
 <li>VARCHAR的缺点是影响性能，若UPDATE后VARCHAR列的字符串长度变长了，就需要重新分配存储空间</li>
 <li>对于InnoDB引擎，VARCHAR的性能影响可以忽略，具体见下面存储引擎的介绍</li>
 </ol>
-<h2 id="DATETIME和TIMESTAMP的区别"><a href="#DATETIME和TIMESTAMP的区别" class="headerlink" title="DATETIME和TIMESTAMP的区别"></a>DATETIME和TIMESTAMP的区别</h2><ol>
+<h1 id="DATETIME和TIMESTAMP的区别"><a href="#DATETIME和TIMESTAMP的区别" class="headerlink" title="DATETIME和TIMESTAMP的区别"></a>DATETIME和TIMESTAMP的区别</h1><ol>
 <li>TIMESTAMP类型的字段在insert和update时可指定更新为当前时间</li>
 <li>TIMESTAMP类型显示的时间与系统时间所处的时区有关。例如，系统时间设为东八区时，显示的值为’2018-05-24 14:59:59’；系统时间设为东九区时，显示的值为’2018-05-24 15:59:59’<br>DATETIME类型只显示插入时的时间，即显示的时间不考虑时区变化</li>
 <li>TIMESTAMP表示的日期范围比DATETIME要短得多</li>
 </ol>
-<h2 id="时间类型DATETIME直接相减的结果"><a href="#时间类型DATETIME直接相减的结果" class="headerlink" title="时间类型DATETIME直接相减的结果"></a>时间类型DATETIME直接相减的结果</h2><p>如语句：</p>
+<h1 id="时间类型DATETIME直接相减的结果"><a href="#时间类型DATETIME直接相减的结果" class="headerlink" title="时间类型DATETIME直接相减的结果"></a>时间类型DATETIME直接相减的结果</h1><p>如语句：</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span>  create_time, update_time, update_time-create_time <span class="keyword">as</span> pay_time <span class="keyword">from</span> t_order;</span><br></pre></td></tr></table></figure>
 
 <p>这样写是错的！<br>因为，mysql在时间相减时，做了个转换，但不是UNIX_TIMESTAMP(create_time)这样的转换，而是把DATETIME直接转成了整数，如create_time=’2020-05-15 08:55:25’转成了20200515085525，因此得到的是两个无意义的整数相减的结果。<br>因此，对于时间类型的相减，正确处理应该是 UNIX_TIMESTAMP(update_time)-UNIX_TIMESTAMP(create_time)</p>
 <h2 id="HAVING和WHERE的不同使用场景"><a href="#HAVING和WHERE的不同使用场景" class="headerlink" title="HAVING和WHERE的不同使用场景"></a>HAVING和WHERE的不同使用场景</h2><p>WHERE 就用在普通的SELECT语句作为查询条件，而 HAVING 用在聚合函数的字段上。如语句：</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> currency_type, <span class="keyword">sum</span>(amount) <span class="keyword">as</span> total_amount <span class="keyword">from</span> t_order <span class="keyword">where</span> merchant_id=<span class="string">'123456'</span> <span class="keyword">group</span> <span class="keyword">by</span> currency_type <span class="keyword">having</span> total_amount&gt;<span class="number">0</span>;</span><br></pre></td></tr></table></figure>
 
-<h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><p>索引就好比一本书的目录，它会让你更快的找到内容。但目录（索引）并不是越多越好，假如这本书1000页，有500页是目录，它当然效率低，目录是要占纸张的，而索引是要占磁盘空间的。</p>
+<h1 id="时间函数"><a href="#时间函数" class="headerlink" title="时间函数"></a>时间函数</h1><ul>
+<li><p>UNIX_TIMESTAMP() 返回秒数，也可以带上时间。示例：<br>SELECT UNIX_TIMESTAMP(‘2020-06-16’); == 1592265600<br>SELECT UNIX_TIMESTAMP(‘2020-06-16 02:00:00’); == 1592272800</p>
+</li>
+<li><p>FROM_UNIXTIME() 输入秒数返回日期字符串，日期格式可指定<br>SELECT FROM_UNIXTIME(1592265600); == 2020-06-16 00:00:00<br>SELECT FROM_UNIXTIME(1592265600, ‘%Y-%m-%d’); == 2020-06-16</p>
+</li>
+</ul>
+<h1 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h1><p>事务的四要素ACID的含义是：</p>
+<ul>
+<li>原子性（Atomicity）：要么全部完成，要么全部不完成</li>
+<li>一致性（Consistency）：一个事务单元需要提交之后才会被其他事务可见</li>
+<li>隔离性（Isolation）：并发事务之间不会互相影响，设立了不同程度的<strong>隔离级别</strong>，通过适度的破坏一致性，得以提高性能</li>
+<li>持久性（Durability）：事务提交后即持久化到磁盘不会丢失</li>
+</ul>
+<p>其中，隔离级别包括：</p>
+<ul>
+<li>读未提交（Read Uncommitted）：可以读取未提交的记录，会出现脏读，幻读，不可重复读，所有并发问题都可能遇到</li>
+<li>读已提交（Read Committed）：事务中只能看到已提交的修改，不会出现脏读现象，但是会出现幻读，不可重复读（大多数数据库的默认隔离级别都是 RC，但是MySQL InnoDb默认是 RR）</li>
+<li>可重复读（Repeatable Read）：MySQL InnoDb 默认的隔离级别，解决了不可重复读问题，但是仍然存在幻读问题</li>
+<li>序列化（Serializable）：最高隔离级别，啥并发问题都没有</li>
+</ul>
+<p>MySQL对事务的处理默认是“自动提交模式”。当你用<code>SHOW GLOBAL VARIABLES LIKE &#39;%autocommit%&#39;</code>可以查看autocommit开关是否打开，默认是打开的。这意味着，MySQL会在每条SQL执行完后自动提交事务，即一条SQL就是一个事务。</p>
+<p>当你需要让多条SQL在一个事务中，需要先把autocommit开关关闭，再用SQL关键字：BEGIN、COMMIT、ROLLBACK手动开始、提交、回滚事务。需要注意，只有InnoDB引擎的表才支持事务，即在事务中只能操作InnoDB表。</p>
+<p>和数据库有关的几个理论缩写：ACID、CAP、BASE。他们的区别可以看这篇博客：<a href="https://www.cnblogs.com/minikobe/p/11137256.html。总的来说，ACID不考虑数据库是否是分布式的，都要求强一致性。CAP和BASE考虑的是分布式数据库在一致性问题上的取舍。" target="_blank" rel="noopener">https://www.cnblogs.com/minikobe/p/11137256.html。总的来说，ACID不考虑数据库是否是分布式的，都要求强一致性。CAP和BASE考虑的是分布式数据库在一致性问题上的取舍。</a></p>
+<h2 id="相关博客"><a href="#相关博客" class="headerlink" title="相关博客"></a>相关博客</h2><p>事务与隔离级别：<a href="https://www.aneasystone.com/archives/2017/10/solving-dead-locks-one.html" target="_blank" rel="noopener">https://www.aneasystone.com/archives/2017/10/solving-dead-locks-one.html</a></p>
+<p>菜鸟教程，手动处理事务的SQL：<a href="https://www.runoob.com/mysql/mysql-transaction.html" target="_blank" rel="noopener">https://www.runoob.com/mysql/mysql-transaction.html</a></p>
+<p>ACID、CAP、BASE的介绍：<a href="https://www.cnblogs.com/minikobe/p/11137256.html" target="_blank" rel="noopener">https://www.cnblogs.com/minikobe/p/11137256.html</a></p>
+<h1 id="存储引擎"><a href="#存储引擎" class="headerlink" title="存储引擎"></a>存储引擎</h1><p>关系数据库表是用于存储和组织信息的数据结构。我们在实际开发过程中，可能需要各种各样的表，如查询快且少更新的表、经常更新的表。表的用途上的区别，就是对数据处理上的区别。对于MySQL来说，它提供了很多种类型的存储引擎，我们可以根据对数据处理的需求，选择不同的存储引擎，从而最大限度的利用MySQL强大的功能。</p>
+<p>MySQL存储引擎包括：InnoDB、CSV、MyISAM、MEMORY等等。使用<code>SHOW ENGINES</code>命令可以查看你的Mysql支持的所有存储引擎。</p>
+<h2 id="InnoDB"><a href="#InnoDB" class="headerlink" title="InnoDB"></a>InnoDB</h2><p>特点：</p>
+<ul>
+<li>支持行级锁（也支持表级锁）</li>
+<li>支持事务</li>
+<li>支持外键（MySQL支持事务和外键的存储引擎只有InnoDB）</li>
+<li>支持AUTO_INCREMENT列</li>
+<li>数据和索引放在同一个文件<br>创建InnoDB表时，在”MYSQL_HOME/data/db_name”文件夹下，新增2个文件：<br>table_name.frm -&gt; 存储表定义<br>table_name.ibd -&gt; 存储数据和索引</li>
+<li>InnoDB要求表中一定有主键ID。若用户未指定，InnoDB会自动指定</li>
+<li>使用B+Tree索引，聚集索引</li>
+</ul>
+<blockquote>
+<p>问题一：为什么InnoDB一定要有主键？什么是聚集索引？答案在“InnoDB的B+Tree索引”。</p>
+</blockquote>
+<p>应用场景：</p>
+<ul>
+<li>要求事务安全</li>
+</ul>
+<h2 id="MyISAM"><a href="#MyISAM" class="headerlink" title="MyISAM"></a>MyISAM</h2><p>特点：</p>
+<ul>
+<li>只支持表级锁</li>
+<li>不支持事务和外键</li>
+<li>支持AUTO_INCREMENT列</li>
+<li>数据和索引分开放在两个文件<br>创建MyISAM表时，在”MYSQL_HOME/data/db_name”文件夹下，新增3个文件：<br>table_name.frm -&gt; 存储表定义<br>table_name.MYD -&gt; 存储数据<br>table_name.MYI -&gt; 存储索引</li>
+<li>支持3种表：静态表、动态表、压缩表<ul>
+<li>静态表：记录都是固定长度，存储非常迅速，容易缓存，出现故障容易恢复；但是占用的空间比较多。PS：在取数据的时候，默认会把字段后面的空格去掉，如果不注意会把数据本身带的空格也会忽略。</li>
+<li>动态表：记录不是固定长度的，占用的空间相对较少；缺点：频繁的更新、删除数据容易产生碎片，需要定期执行OPTIMIZE TABLE或者myisamchk-r命令来改善性能</li>
+<li>压缩表：因为每个记录是被单独压缩的，所以只有非常小的访问开支</li>
+</ul>
+</li>
+<li>表中可以没有主键ID</li>
+<li>使用B+Tree索引，非聚集索引</li>
+</ul>
+<p>应用场景：</p>
+<ul>
+<li>不要求事务安全</li>
+<li>要求SELECT效率高</li>
+<li>要求INSERT效率高</li>
+<li>不经常UPDATE的表</li>
+</ul>
+<blockquote>
+<p>问题二：为什么MyISAM用于不经常UPDATE的表？答案在“MyISAM的锁机制”和“MyISAM的B+Tree索引”</p>
+</blockquote>
+<p>要对比这两者的性能，需要先了解它们在锁机制和索引上的区别。</p>
+<h1 id="锁机制"><a href="#锁机制" class="headerlink" title="锁机制"></a>锁机制</h1><p>锁的分类：</p>
+<ul>
+<li>表级锁：保证同一时刻只有一个线程操作<strong>该表</strong>，避免冲突<ul>
+<li>读锁：也叫共享锁（S锁）。不拒绝其他对<strong>同张表</strong>的读请求，会拒绝对<strong>同张表</strong>的写请求。持有该锁的线程只能进行读操作</li>
+<li>写锁：也叫排它锁（X锁）。拒绝对<strong>同张表</strong>的所有请求。持有该锁的线程可以进行读、写操作</li>
+</ul>
+</li>
+<li>行级锁：保证同一时刻只有一个线程操作<strong>该记录</strong>，避免冲突<ul>
+<li>读锁：也叫共享锁（S锁）。不拒绝其他对<strong>同条记录</strong>的读请求，会拒绝对<strong>同条记录</strong>的写请求。持有该锁的线程只能进行读操作</li>
+<li>写锁：也叫排它锁（X锁）。拒绝对<strong>同条记录</strong>的所有请求。持有该锁的线程可以进行读、写操作</li>
+</ul>
+</li>
+</ul>
+<p>总之，在同一级中，读锁与写锁互斥，不能同时存在。写锁与其他写锁互斥，读锁与其他读锁兼容。读锁不阻碍读请求，阻碍写请求。写锁阻碍所有读写请求。</p>
+<h2 id="MyISAM的锁机制"><a href="#MyISAM的锁机制" class="headerlink" title="MyISAM的锁机制"></a>MyISAM的锁机制</h2><p>MyISAM只支持表级锁。</p>
+<p>什么时候锁：</p>
+<ul>
+<li>执行SELECT前，会自动给所有涉及到的表加读锁</li>
+<li>执行INSERT、UPDATE、DELETE前，会自动给所有涉及到的表加写锁</li>
+</ul>
+<p>锁调度：</p>
+<ul>
+<li>线程到来时，该表已经被锁的话，锁会放入锁等待队列中</li>
+<li>写锁优先。同时有两个线程对同一张表分别请求读锁与写锁，先加写锁。在锁等待队列中，即使读锁请求时间更早，写锁也会放到读锁之前（用户可以修改这个规则）</li>
+</ul>
+<blockquote>
+<p>此处可回答问题二：为什么MyISAM用于不经常UPDATE的表？<br>因为经常性的UPDATE会不断请求表写锁，写锁优先，会导致SELECT操作阻塞，所以MyISAM表不适合经常UPDATE。</p>
+</blockquote>
+<p>MyISAM不会出现死锁，原因：因为MyISAM总是一次性获得所需的全部锁，例如SELECT两张表时要求一次性获得这两张表的读锁，不能全部获得就等待，直到可以全部获得为止。（可对比下面的“InnoDB为什么会出现死锁”）</p>
+<h2 id="InnoDB的锁机制"><a href="#InnoDB的锁机制" class="headerlink" title="InnoDB的锁机制"></a>InnoDB的锁机制</h2><p>InnoDB支持行级锁、表级锁。但InnoDB的表级锁属于<strong>意向锁</strong>，和MyISAM的表级锁有点不同。</p>
+<p>什么时候锁：</p>
+<ul>
+<li>行读锁：SELECT语句显式加行读锁(SELECT … LOCK IN SHARE MODE)（普通SELECT语句不会加任何锁）</li>
+<li>行写锁：执行INSERT、UPDATE、DELETE前，会自动给所有涉及到的行加行写锁；SELECT语句显式加行写锁(SELECT … FOR UPDATE)</li>
+<li>表读锁：也叫意向共享锁（IS锁）。给行加行读锁前，先加表读锁</li>
+<li>表写锁：也叫意向排他锁（IX锁）。给行加行写锁前，先加表写锁</li>
+</ul>
+<p>总之，一个事务要查询某一行，不需要任何锁；一个事务要修改某一行，需要行写锁+表写锁。</p>
+<h2 id="行锁"><a href="#行锁" class="headerlink" title="行锁"></a>行锁</h2><p>行锁这个名字听起来像是这个锁加在某个数据行上，实际上在InnoDB中，行锁是加在索引上的。</p>
+<p>这意味着：只有通过索引条件检索数据，InnoDB才使用行级锁，否则，InnoDB将使用表锁（非意向锁）！</p>
+<h3 id="意向锁"><a href="#意向锁" class="headerlink" title="意向锁"></a>意向锁</h3><p>意向锁的含义是，MySQL察觉到事务有意向对表中的某条记录加读锁/写锁，就给整张表加个表锁。但这个表锁的兼容性和MyISAM的表级锁不同。</p>
+<h4 id="意向锁的兼容性"><a href="#意向锁的兼容性" class="headerlink" title="意向锁的兼容性"></a>意向锁的兼容性</h4><ol>
+<li>意向锁之间：<ol>
+<li>IS和IS兼容</li>
+<li>IS和IX兼容</li>
+<li>IX和IX兼容</li>
+</ol>
+</li>
+<li>意向锁IX、IS和<strong>行级</strong>S锁、X锁之间：全部互相兼容！</li>
+<li>意向锁IX、IS和<strong>表级</strong>S锁、X锁之间：<ol>
+<li>IS和S兼容</li>
+<li>IS和X互斥</li>
+<li>IX和S互斥</li>
+<li>IX和X互斥</li>
+</ol>
+</li>
+</ol>
+<p>这里所说的不同种类的锁兼容的含义是，一张表可以同时加上这些互相兼容的锁。例如“IS和IX兼容”是指，一张表中可以同时存在多个IS锁和多个IX锁。</p>
+<h3 id="意向锁的作用"><a href="#意向锁的作用" class="headerlink" title="意向锁的作用"></a>意向锁的作用</h3><p>第一，在没有意向锁存在的情况下，当事务A准备给t_order表加表读锁（非意向锁）时，需要确认：</p>
+<ol>
+<li>当前表没有被加表写锁</li>
+<li>当前表中没有记录被加行写锁</li>
+</ol>
+<p>为了确认第2点，事务A需要检查每一行记录的锁，效率很低。有了意向锁之后，事务A准备给t_order表加表读锁（非意向锁）时，只需要确认：</p>
+<ol>
+<li>当前表没有被加IX锁</li>
+</ol>
+<p>若确认当前表存在IX锁，事务A就能得知当前表中一定存在行写锁，就不需要检查每行记录，只需等待IX锁释放就行。</p>
+<p>第二，意向锁之间的互相兼容，可以提高并发性能，也能保证并发环境下的事务隔离。举个例子，<br>事务A执行SQL：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> t_order <span class="keyword">WHERE</span> <span class="keyword">id</span> = <span class="number">1</span> <span class="keyword">FOR</span> <span class="keyword">UPDATE</span>;</span><br></pre></td></tr></table></figure>
+<p>此时t_order表存在两把锁：表上的IX锁、id=1的记录上的X锁。</p>
+<p>事务B执行SQL：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> t_order <span class="keyword">WHERE</span> <span class="keyword">id</span> = <span class="number">10</span> <span class="keyword">FOR</span> <span class="keyword">UPDATE</span>;</span><br></pre></td></tr></table></figure>
+<p>因为IX锁可以兼容，所以事务B也可以给t_order表加上IX锁，再因为id=10的记录上不存在X锁，所以事务B不需要等事务A释放锁。</p>
+<h2 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h2><p>InnoDB为什么会发生死锁？</p>
+<p>在InnoDB中，锁是<strong>逐步获得</strong>的，这就决定了在InnoDB中发生死锁是可能的。</p>
+<p>举例，下面这句SQL：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">update</span> students <span class="keyword">set</span> score = <span class="number">100</span> <span class="keyword">where</span> <span class="keyword">id</span> &lt; <span class="number">30</span>;</span><br></pre></td></tr></table></figure>
+<p>这一条SQL就是一个事务，这条SQL会更新满足条件的多条记录。找到第一条记录时，会给第一条记录上锁，第一条记录更新完成后，找到第二条记录并加锁，第二条更新完成再给第三条加锁，以此类推。</p>
+<p>若这句SQL和上面那句同时开始：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">update</span> students <span class="keyword">set</span> score = <span class="number">100</span> <span class="keyword">where</span> age &gt; <span class="number">30</span>;</span><br></pre></td></tr></table></figure>
+<p>假设第一条SQL的加锁顺序：id = 15 -&gt; 18 -&gt; 20，第二条SQL的加锁顺序（age为普通索引，所以会用行锁）：(age, id) = (24, 18) -&gt; (24, 20) -&gt; (25, 15) -&gt; (25, 49)。其中，对 id 的加锁顺序为 id = 18 -&gt; 20 -&gt; 15 -&gt; 49。可以看到事务A先锁15，再锁18，而事务B先锁18，再锁15，从而形成死锁。</p>
+<h2 id="推荐博客"><a href="#推荐博客" class="headerlink" title="推荐博客"></a>推荐博客</h2><p>常见的锁类型，还介绍了索引结构：<a href="https://www.aneasystone.com/archives/2017/11/solving-dead-locks-two.html" target="_blank" rel="noopener">https://www.aneasystone.com/archives/2017/11/solving-dead-locks-two.html</a></p>
+<p>意向锁的作用：<a href="https://juejin.im/post/5b85124f5188253010326360" target="_blank" rel="noopener">https://juejin.im/post/5b85124f5188253010326360</a></p>
+<h1 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h1><p>索引就好比一本书的目录，它会让你更快的找到内容。但目录（索引）并不是越多越好，假如这本书1000页，有500页是目录，它当然效率低，目录是要占纸张的，而索引是要占磁盘空间的。</p>
 <p>索引用于快速找出在某个列中有一特定值的行。如果不使用索引，MySQL必须从第1条记录开始然后读完整个表直到找出相关的行。表越大，花费的时间越多。如果表中查询的列有一个索引，MySQL能快速到达一个位置去搜寻数据文件的中间，没有必要看所有数据。（这里的原理见下面B+TREE索引的介绍）</p>
 <p>索引是帮助MySQL高效获取数据的<strong>数据结构</strong>。</p>
-<h3 id="索引类型"><a href="#索引类型" class="headerlink" title="索引类型"></a>索引类型</h3><ul>
+<h2 id="索引类型"><a href="#索引类型" class="headerlink" title="索引类型"></a>索引类型</h2><ul>
 <li>普通索引：最基本的索引，没有任何限制</li>
 <li>唯一索引（约束）：与”普通索引”类似，不同的就是：索引列的值必须唯一，但允许有空值。可指定多个列构成一个唯一索引</li>
 <li>主键索引（约束）：它是一种特殊的唯一索引，不允许有空值</li>
 <li>全文索引：仅可用于MyISAM表，针对较大的数据，生成全文索引很耗时间和空间</li>
 <li>组合索引：遵循“最左”原则。创建组合索引时应该将最常用作查询条件的列放在最左边，依次递减</li>
 </ul>
-<h3 id="使用索引"><a href="#使用索引" class="headerlink" title="使用索引"></a>使用索引</h3><p><strong>单列索引：</strong><br>    select update delete语句中where条件带上索引列<br>    select语句的order by/group by带上索引列</p>
+<h2 id="使用索引"><a href="#使用索引" class="headerlink" title="使用索引"></a>使用索引</h2><p><strong>单列索引：</strong><br>    select update delete语句中where条件带上索引列<br>    select语句的order by/group by带上索引列</p>
 <p><strong>组合索引：</strong><br>    select update delete语句中where条件中一定要包含最左边的索引列</p>
 <p><strong>注意：</strong></p>
 <ol>
@@ -45,9 +200,32 @@
 <li>模糊查询中，若查询条件这样写：… where name like ‘%cai%’，则不会用到索引（原因是%放在最前）</li>
 <li>mysql认为全文扫描比使用索引快时，即使where条件有索引也不会用索引，例如：在一张共100条记录的表中select前90条记录<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> t_order <span class="keyword">where</span> <span class="keyword">id</span>&lt;=<span class="number">90</span>;</span><br></pre></td></tr></table></figure>
 
+
 </li>
 </ol>
-<h3 id="B-TREE索引"><a href="#B-TREE索引" class="headerlink" title="B+TREE索引"></a>B+TREE索引</h3><h2 id="锁机制"><a href="#锁机制" class="headerlink" title="锁机制"></a>锁机制</h2><h2 id="InnoDB引擎"><a href="#InnoDB引擎" class="headerlink" title="InnoDB引擎"></a>InnoDB引擎</h2><h2 id="EXPLAIN用法"><a href="#EXPLAIN用法" class="headerlink" title="EXPLAIN用法"></a>EXPLAIN用法</h2><h2 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h2></div></article><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/MYSQL/">MYSQL</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2020/05/30/springboot-datasource-config/"><i class="fa fa-chevron-left">  </i><span>SpringBoot配置数据源</span></a></div><div class="next-post pull-right"><a href="/2020/05/16/algorithmic-puzzles-note/"><span>《算法谜题》笔记</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer><div class="layout" id="footer"><div class="copyright">&copy;2013 - 2020 By yunnight</div><div class="framework-info"><span>Driven - </span><a href="http://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody" target="_blank" rel="noopener"><span>Melody</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.7.0"></script><script src="/js/fancybox.js?version=1.7.0"></script><script src="/js/sidebar.js?version=1.7.0"></script><script src="/js/copy.js?version=1.7.0"></script><script src="/js/fireworks.js?version=1.7.0"></script><script src="/js/transition.js?version=1.7.0"></script><script src="/js/scroll.js?version=1.7.0"></script><script src="/js/head.js?version=1.7.0"></script><script src="/js/search/local-search.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+<h2 id="B-Tree索引"><a href="#B-Tree索引" class="headerlink" title="B+Tree索引"></a>B+Tree索引</h2><p>B+Tree是BTree的变种，MySQL的BTree索引就使用它来作为数据结构。MyISAM表、InnoDB表的索引就是用B+Tree存储，一个索引就是一个B+Tree。在B+Tree中，非叶子节点只保存key与指针，叶子节点的两个域分别是key与data。</p>
+<h3 id="MyISAM的B-Tree索引"><a href="#MyISAM的B-Tree索引" class="headerlink" title="MyISAM的B+Tree索引"></a>MyISAM的B+Tree索引</h3><p>在MyISAM的B+Tree中，叶子节点的data域存放的是<strong>数据记录的地址</strong>，这是因为MyISAM的索引和数据是分两个文件存放的。</p>
+<p>下面是MyISAM索引的原理图。</p>
+<p>主键索引（key为主键列值）：<br>图</p>
+<p>普通索引（key为普通索引列值）：<br>图</p>
+<p>MyISAM的主键索引和普通索引在结构上没有任何区别，只是主键索引要求key是唯一的，而普通索引的key可以重复。<br>因此，MyISAM中索引检索的算法是：首先按照B+Tree搜索算法搜索索引，如果指定的key存在，则取出其data域的值，然后以data域的值为地址，读取相应数据记录。</p>
+<h3 id="InnoDB的B-Tree索引"><a href="#InnoDB的B-Tree索引" class="headerlink" title="InnoDB的B+Tree索引"></a>InnoDB的B+Tree索引</h3><p>虽然InnoDB也使用B+Tree作为索引结构，但具体实现方式却与MyISAM截然不同。</p>
+<p>第一，MyISAM的data域仅保存数据记录的地址。而InnoDB的数据和索引存放在一个文件里，数据文件本身就是按B+Tree组织的一个索引结构，这棵树的叶节点data域保存了<strong>完整的数据记录</strong>，key是主键列值。<br>图<br>这种索引就叫<strong>聚集索引</strong>，即数据和主键聚在一起。正因为InnoDB的数据文件要按主键聚集，所以InnoDB要求表必须有主键（MyISAM可以没有），如果没有显式指定，则MySQL系统会自动选择一个可以唯一标识数据记录的列作为主键，如果不存在这种列，则MySQL自动为InnoDB表生成一个隐含字段作为主键，这个字段长度为6个字节，类型为长整形。</p>
+<blockquote>
+<p>这里就回答了问题一：为什么InnoDB一定要有主键？什么是聚集索引？</p>
+</blockquote>
+<p>第二，InnoDB的普通索引data域存储相应记录主键的值而不是地址<br>图<br>这样导致使用普通索引搜索需要检索两遍索引：首先检索普通索引获得主键，然后用主键到主索引中检索获得记录。</p>
+<p>知道了InnoDB的索引实现后，就很容易明白为什么不建议使用过长的字段作为主键，因为所有辅助索引都引用主索引，过长的主索引会令辅助索引变得过大。再例如，用非单调的字段作为主键在InnoDB中不是个好主意，因为InnoDB数据文件本身是一颗B+Tree，非单调的主键会造成在插入新记录时数据文件为了维持B+Tree的特性而频繁的分裂调整（如主键最大是id=500，现在要插入id=400），十分低效，而使用自增字段作为主键则是一个很好的选择。另外，若使用int型字段做主键，InnoDB也会强制要求该字段设置AUTO_INCREMENT。</p>
+<h1 id="MyISAN和InnoDB的对比"><a href="#MyISAN和InnoDB的对比" class="headerlink" title="MyISAN和InnoDB的对比"></a>MyISAN和InnoDB的对比</h1><p>在介绍MyISAM时说了它的INSERT效率高，一个原因是它不像InnoDB要检查外键约束，还要维护事务，减少了一部分开销。另一个原因是，B+Tree结构在插入新记录时要分裂调整，但MyISAM的data域存的是数据的物理地址，和InnoDB的data域就是记录相比，内容较小，分裂调整的速度更快。但是，MyISAM的INSERT效率不一定就比InnoDB高，一个是因为MyISAM的表锁，一个是因为InnoDB如果使用自增主键，B+Tree的调整就不会那么麻烦。</p>
+<blockquote>
+<p>什么是页？<br>“页”是指存储引擎从磁盘读取数据时，每次可以读取多少数据。换个说法，存储引擎每次从磁盘中读取一整页的数据，这“一整页的数据”有多少。为什么一次读取可以读到多条数据？这是因为B+Tree的一个叶子节点上就有多条数据，所以当查找到这个叶子节点时，就可以把这个叶子节点上的所有数据一次性读出来。</p>
+</blockquote>
+<blockquote>
+<p>InnoDB插入数据会进行什么分裂调整？<br>因为InnoDB的数据位置是按照主键的顺序安排的，主键相近的，数据会在一个叶子节点上。若主键不是规律自增的，就会在插入时要B+Tree重新调整主键位置，即调整了数据的位置，原本靠在一起的数据也许会被分开。靠在一起的数据在一个叶子节点上，即在一个“页”上，所以这就导致了“页”的分裂。而如果主键自增，那么每次插入都是在B+Tree的最后新增数据，不会改变前面数据的位置，不用进行页分裂。</p>
+</blockquote>
+<p>另外，在查询效率上，也不能确定MyISAM和InnoDB谁更高，只能说各自都有优势。MyISAM的主键索引和普通索引的data域都是数据的物理地址，而InnoDB用普通索引检索时要搜两遍索引。但是，MyISAM和InnoDB的缓存机制不同，MyISAM只缓存索引，InnoDB缓存索引和数据。因此，MyISAM每次查找就要从磁盘里拿数据，而InnoDB首先从内存里获取数据，如果没有再到磁盘里拿。InnoDB内存里的数据不是一下子就缓存。InnoDB在一次IO读取中，就会把这个节点上的所有数据缓存，若下次查找的数据还在这个节点上，就可以直接从缓存中取了。如果InnoDB内存足够大，查询足够多，InnoDB速率可能会超过MyISAM。</p>
+<p>再者，如果用主键进行范围查找，</p>
+<h2 id="EXPLAIN用法"><a href="#EXPLAIN用法" class="headerlink" title="EXPLAIN用法"></a>EXPLAIN用法</h2><h2 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h2></div></article><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/MYSQL/">MYSQL</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2020/05/30/springboot-datasource-config/"><i class="fa fa-chevron-left">  </i><span>SpringBoot配置数据源</span></a></div><div class="next-post pull-right"><a href="/2020/05/16/algorithmic-puzzles-note/"><span>《算法谜题》笔记</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer><div class="layout" id="footer"><div class="copyright">&copy;2013 - 2020 By yunnight</div><div class="framework-info"><span>Driven - </span><a href="http://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody" target="_blank" rel="noopener"><span>Melody</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.7.0"></script><script src="/js/fancybox.js?version=1.7.0"></script><script src="/js/sidebar.js?version=1.7.0"></script><script src="/js/copy.js?version=1.7.0"></script><script src="/js/fireworks.js?version=1.7.0"></script><script src="/js/transition.js?version=1.7.0"></script><script src="/js/scroll.js?version=1.7.0"></script><script src="/js/head.js?version=1.7.0"></script><script src="/js/search/local-search.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
   $('#nav').addClass('is-mobile')
   $('footer').addClass('is-mobile')
   $('#top-container').addClass('is-mobile')
