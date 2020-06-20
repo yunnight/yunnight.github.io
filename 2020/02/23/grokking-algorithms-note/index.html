@@ -1,0 +1,139 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="《算法图解》笔记"><meta name="keywords" content=""><meta name="author" content="yunnight"><meta name="copyright" content="yunnight"><title>《算法图解》笔记 | yunnight</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.7.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"We didn't find any results for the search: ${query}"}},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  }
+} </script><meta name="generator" content="Hexo 4.2.0"></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#大O表示法"><span class="toc-number">2.</span> <span class="toc-text">大O表示法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数组和链表"><span class="toc-number">3.</span> <span class="toc-text">数组和链表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#递归"><span class="toc-number">4.</span> <span class="toc-text">递归</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#尾递归"><span class="toc-number">4.1.</span> <span class="toc-text">尾递归</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分而治之（D-amp-C）"><span class="toc-number">5.</span> <span class="toc-text">分而治之（D&amp;C）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#散列表"><span class="toc-number">6.</span> <span class="toc-text">散列表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二分查找"><span class="toc-number">7.</span> <span class="toc-text">二分查找</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#选择排序"><span class="toc-number">8.</span> <span class="toc-text">选择排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#快速排序"><span class="toc-number">9.</span> <span class="toc-text">快速排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#图算法"><span class="toc-number">10.</span> <span class="toc-text">图算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NP完全问题（NPC）"><span class="toc-number">11.</span> <span class="toc-text">NP完全问题（NPC）</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://raw.githubusercontent.com/yunnight/pics/master/blog_avatar.jpg"></div><div class="author-info__name text-center">yunnight</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">11</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">7</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">Categories</span><span class="pull-right">6</span></a></div></div></div><div id="content-outer"><div class="plain" id="top-container"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">yunnight</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> Search</span></a></span></div></div><div class="layout" id="content-inner"><article id="post"><div class="plain" id="post-title">《算法图解》笔记</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-02-23</time><span class="post-meta__separator">|</span><i class="fa fa-inbox" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/%E7%AE%97%E6%B3%95/"> 算法</a></div><div class="article-container" id="post-content"><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>　　《算法图解》这本书真的非常好懂，它结合图画，对算法基础知识讲得很透，把“每一步要怎么做”和“为什么这样做”都交代了。这些知识以前在学校也学习过，但那时候只记住算法每一步怎么做，时间复杂度也是硬背的，根本没去理解背后的原因。这样的后果就是学完就忘。这本书就很适合我这种对算法稍微懂点但又不是很懂的人，它帮我把以前的疑惑都解开了。但它有个局限性就是，只讲基础，对稍微难点的内容都是一笔带过，只能靠个人去学，真正的入门书。<br>　　因为作者就像聊天似的教算法，图画也多，所以这本书的知识点比较散，这篇博客就是将我从这本书学到的知识点记录下来。</p>
+<h2 id="大O表示法"><a href="#大O表示法" class="headerlink" title="大O表示法"></a>大O表示法</h2><ul>
+<li>大O表示法体现的是随着元素数量n的增多，操作次数的增长趋势。如O(logn)（二分查找）的增长趋势明显比0(n)（简单查找）要慢得多，因此可以说二分查找比简单查找更好</li>
+<li>大O表示法一般是该算法在最糟情况下的速度，但算法也有平均情况（也是最优情况）下的速度。如快速排序最糟O(n^2)，平均O(nlogn)</li>
+<li>大O表示法不含常量的原因：当元素数量很多时，常量对速度的影响可忽略不计</li>
+<li>O(1)表示常量时间，含义是无论元素数量多少，所需时间都一样</li>
+</ul>
+<p><strong>注：</strong></p>
+<ol>
+<li>这本书里只讨论时间复杂度，没讲空间复杂度</li>
+<li>logn就是log2n，即2的幂</li>
+</ol>
+<h2 id="数组和链表"><a href="#数组和链表" class="headerlink" title="数组和链表"></a>数组和链表</h2><ul>
+<li>在内存方面：数组元素的内存地址是相邻的，链表元素的内存地址不用相邻，链表的每个元素中都会存放下一个元素的内存地址</li>
+<li>在查找方面：链表只能顺序查找，而数组可以随机访问到任一元素，因此说数组的查找效率更好</li>
+<li>在插入和删除方面：链表的插入和删除只是改变某个元素存储的下一个元素的地址，数组的插入要重新分配内存，删除时要把后面的元素往前移</li>
+<li>链表的插入和删除都是O(1)，这不包括“查找插入/删除位置”的时间</li>
+</ul>
+<h2 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h2><ul>
+<li>递归没有什么性能优势，只是让代码更清晰。可以用递归实现的也能用循环实现</li>
+<li>每个递归都包含两个条件：递归条件–让函数调用自己的条件，基线条件–函数return的条件（即不再递归的条件）</li>
+<li>每次递归调用都会加入到调用栈，占用内存，执行完就会从调用栈弹出</li>
+</ul>
+<h3 id="尾递归"><a href="#尾递归" class="headerlink" title="尾递归"></a>尾递归</h3><p>　　在调用栈过高的情况下，可以写成尾递归的形式。尾递归就是手动把本次调用的计算结果作为递归函数的参数，这样在return时就直接return递归，而不是还要先处理递归结果再return。<br>　　下面以阶乘函数为例，展示递归和尾递归的不同写法：</p>
+<p><strong>普通递归：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">fac</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (n &lt;= <span class="number">1</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">else</span> </span><br><span class="line">		<span class="keyword">return</span> n * fac(n - <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>尾递归：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">fac2</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">int</span> t)</span> </span>&#123; <span class="comment">//第一次调用时t=1</span></span><br><span class="line">	<span class="keyword">if</span> (n &lt;= <span class="number">1</span>)</span><br><span class="line">		<span class="keyword">return</span> t;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="keyword">return</span> fac2(n - <span class="number">1</span>, n * t);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>　　写成尾递归后，若编译器会自动帮你把尾递归代码优化就会很好用（jvm不会），否则需要你手动把尾递归代码优化了才会有节省栈内存的效果。尾递归可以优化的原因：每次递归都计算出了一个结果，上一次递归的结果就没必要保留，可以释放内存。</p>
+<h2 id="分而治之（D-amp-C）"><a href="#分而治之（D-amp-C）" class="headerlink" title="分而治之（D&amp;C）"></a>分而治之（D&amp;C）</h2><ul>
+<li><p>分而治之是一种递归式的问题解决方法。思路是缩小问题范围，思考解决小问题的方法，能解决小问题的方法也适用于大问题。欧几里得算法就是这个思路</p>
+<blockquote>
+<p>两个整数的最大公约数等于其中较小的那个数和两数相除余数的最大公约数</p>
+</blockquote>
+</li>
+<li><p>工作过程：a.找出基线条件，这个条件必须尽可能简单；b.缩小问题的规模，使其符合基线条件</p>
+</li>
+<li><p>要处理的对象是数组时，基线条件一般是数组为空或只含一个元素</p>
+</li>
+</ul>
+<p><strong>举例：</strong>求数组[1,2,3,4,5]的总和，基线条件为：当数组只有一个元素时数组总和就等于这个元素。做法就是：不断挑出一个元素，使数组规模变小，求(挑出的元素+数组剩余元素总和)的值。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">sum</span><span class="params">(<span class="keyword">int</span>[] arr)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> len = arr.length;</span><br><span class="line">	<span class="keyword">if</span> (len == <span class="number">1</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span> arr[<span class="number">0</span>];</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">int</span>[] aArr = <span class="keyword">new</span> <span class="keyword">int</span>[len - <span class="number">1</span>];</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; len; i++) &#123;</span><br><span class="line">			aArr[i - <span class="number">1</span>] = arr[i];</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> arr[<span class="number">0</span>] + sum(aArr);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面代码只是为了说明“分而治之”的思想，一般情况下求数组总和还用不到递归。</p>
+<p><strong>注：</strong>这本书说的“分而治之”的概念是其他一些教材说的“减而治之”。一些人把“减而治之”看作是“分而治之”的一种特殊情况，作者这样写也没错。</p>
+<h2 id="散列表"><a href="#散列表" class="headerlink" title="散列表"></a>散列表</h2><ul>
+<li>由数组和散列函数组成，通过散列函数将要存储的值计算成数组索引，值就放在索引处</li>
+<li>良好的散列函数会尽量覆盖数组的每个位置，即每个值都放在不同位置</li>
+</ul>
+<h2 id="二分查找"><a href="#二分查找" class="headerlink" title="二分查找"></a>二分查找</h2><ul>
+<li>只适用于有序数列</li>
+<li>运行时间为O(logn)，就是把一串数字对半分，直到只剩一个数字的次数</li>
+<li>操作过程也运用了递归思想。基线条件：数组中间元素与目标相同；递归条件：当中间的元素不对，对一半数组继续二分查找</li>
+</ul>
+<p><strong>循环式：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">binarySearch</span><span class="params">(<span class="keyword">int</span>[] n, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> high = n.length - <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">int</span> low = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span> (low &lt;= high) &#123;</span><br><span class="line">		<span class="keyword">int</span> mid = (high + low) / <span class="number">2</span>;</span><br><span class="line">		<span class="keyword">int</span> i = n[mid];</span><br><span class="line">		<span class="keyword">if</span> (i == target)</span><br><span class="line">			<span class="keyword">return</span> mid;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (i &lt; target) &#123;</span><br><span class="line">			low = mid + <span class="number">1</span>;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			high = mid - <span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>递归式：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">binarySearch2</span><span class="params">(<span class="keyword">int</span>[] n, <span class="keyword">int</span> target, <span class="keyword">int</span> high, <span class="keyword">int</span> low)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> mid = (high + low) / <span class="number">2</span>;</span><br><span class="line">	<span class="keyword">int</span> num = n[mid];</span><br><span class="line">	<span class="keyword">if</span> (num == target)</span><br><span class="line">		<span class="keyword">return</span> mid;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span> (num &lt; target) &#123;</span><br><span class="line">		low = mid + <span class="number">1</span>;</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		high = mid - <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> binarySearch2(n, target, high, low);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h2><ul>
+<li>重复从数组中挑出最大或最小的元素放入新数组，直到原数组没有元素了</li>
+<li>运行时间为0(n^2)，从n个元素中挑最大或最小（相当于把每个元素检查一遍），要挑n次，所以是n*n</li>
+</ul>
+<h2 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h2><ul>
+<li>过程：选出一个基准值pivot，比基准值小的数作为一个子数组a1，比基准值大的数作为子数组a2，qsort(a1) + pivot + qsort(a2)就是结果</li>
+<li>平均情况下运行时间是O(nlogn)，即<strong>随机选取基准值</strong>，子数组a1和a2的元素个数基本是原数组的一半，调用栈高为logn，每一层栈要处理的元素数是n，所以是n*logn</li>
+<li>最糟情况下运行时间是O(n^2)，即<strong>选取的基准值是最大或最小数</strong>，子数组a1和a2中总有一个为空，此时调用栈高为n，每一层栈要处理的元素数是n，所以是n*n</li>
+</ul>
+<p><strong>附：</strong>合并排序（Merge Sort）<br>　　合并排序就是把数组对半分，再递归把子数组对半分直到只有一个元素（栈高度logn），每一次对半分好后通过比较两个子数组的元素合并为一个有序数组（操作元素数n），合并排序的平均和最糟情况都是0(nlogn)</p>
+<h2 id="图算法"><a href="#图算法" class="headerlink" title="图算法"></a>图算法</h2><ul>
+<li><p>图的结构包含：节点(V)和边(E)</p>
+</li>
+<li><p>树是一种特殊的图：不存在子节点往父节点指的边</p>
+</li>
+<li><p>节点之间有严格的先后顺序的图，叫拓扑排序</p>
+</li>
+<li><p>非加权图找最短路径：广度优先搜索<br>广度优先搜索就是，从起点开始，判断走一步能到达的顶点中有没有终点，若没有，就判断走两步能到达的顶点中有没有终点。。。找到终点后，走的步数就是最短路径。广度优先搜索首先能判断是否能到达终点，其次求出到达终点的最短路径。运行时间O(V+E)。</p>
+</li>
+<li><p>加权图（不含负权边）找最短路径（即权重之和最小）：狄克斯特拉算法<br>狄克斯特拉算法的思路：</p>
+<ol>
+<li>从所在节点的相邻节点中，找出“最便宜”的节点，即到达此相邻节点的权重最小</li>
+<li>到达上一步所述的“最便宜”的节点后，更新从起点到达该“最便宜”节点的相邻节点的权重和</li>
+<li>重复这个过程，直到对图中的每个节点都这样做了</li>
+<li>计算最终路径的权重之和</li>
+</ol>
+</li>
+<li><p>加权图（含负权边）找最短路径（即权重之和最小）：贝尔曼-福德算法</p>
+</li>
+<li><p>狄克斯特拉算法不适合用在带环的图</p>
+</li>
+</ul>
+<h2 id="NP完全问题（NPC）"><a href="#NP完全问题（NPC）" class="headerlink" title="NP完全问题（NPC）"></a>NP完全问题（NPC）</h2><ul>
+<li><p>无法快速找到最优解的就是NP完全问题</p>
+</li>
+<li><p><em>集合覆盖问题</em> 和 <em>旅行商问题</em> 就是典型的NP完全问题。背包问题属于集合覆盖问题。</p>
+</li>
+<li><p>解决NP完全问题，最好使用近似算法。贪婪算法就是近似算法的一种，无法得到最优解，但也接近最优解<br>贪婪算法，就是在限制的条件内，每一步都采取最优的做法。如背包问题中，每次都放入价值最高的物品，直到放不下为止</p>
+</li>
+<li><p>动态规划可以帮助找到NP完全问题的最优解</p>
+<ul>
+<li><p>可以使用动态规划的条件有：</p>
+<ul>
+<li>问题可以分解为互相独立的子问题。如背包问题中，放手机和放电脑彼此是独立的，谁先放都不会影响到另一个的价值</li>
+<li>使用动态规划，问题的对象只有两种状态，有和没有，不能考虑“有一部分”这样的情况。如背包问题中，放一袋大米，只能考虑放整袋，不能考虑把米袋拆了只拿一部分</li>
+</ul>
+</li>
+<li><p>动态规划的步骤</p>
+<ol>
+<li>绘制网格</li>
+<li>决定网格的坐标轴代表什么。因为每个网格都代表一个子问题，所以要考虑怎么划分子问题。如对比两个字符串中相同字母的个数（求最长公共子序列问题），子问题就是一个字母一个字母的比较，所以坐标轴就是两个字符串</li>
+<li>决定网格内的值代表什么。一般就是要优化的值。如求最长公共子序列问题，网格内的值就是相同字母的个数</li>
+<li>决定网格内的值的计算公式。这个要通过经验和尝试来决定</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>NP完全问题的特征：<ol>
+<li>元素数越多，算出最优解的时间越长</li>
+<li>不能使用“分而治之”，必须考虑所有情况的问题</li>
+<li>可以转化为集合覆盖问题或旅行商问题</li>
+</ol>
+</li>
+</ul>
+<p><strong>附：</strong>数学建模中其实有四类问题：P问题、NP问题、NP完全问题（NPC）、NP难问题（NPH），概念涉及到多项式，很复杂，这里不讨论。</p>
+</div></article><div class="post-meta__tag-list"></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2020/02/25/java-date-trans/"><i class="fa fa-chevron-left">  </i><span>Java中的时间类型转换</span></a></div><div class="next-post pull-right"><a href="/2020/02/19/vue-env-build/"><span>搭建vue开发环境</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer><div class="layout" id="footer"><div class="copyright">&copy;2013 - 2020 By yunnight</div><div class="framework-info"><span>Driven - </span><a href="http://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody" target="_blank" rel="noopener"><span>Melody</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.7.0"></script><script src="/js/fancybox.js?version=1.7.0"></script><script src="/js/sidebar.js?version=1.7.0"></script><script src="/js/copy.js?version=1.7.0"></script><script src="/js/fireworks.js?version=1.7.0"></script><script src="/js/transition.js?version=1.7.0"></script><script src="/js/scroll.js?version=1.7.0"></script><script src="/js/head.js?version=1.7.0"></script><script src="/js/search/local-search.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">Local search</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts"></div></div></div><hr><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>Powered by</span> <a href="https://github.com/wzpan/hexo-generator-search" target="_blank" rel="noopener" style="color:#49B1F5;">hexo-generator-search</a></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>
