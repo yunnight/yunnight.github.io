@@ -193,7 +193,7 @@
 <p>在我们上面的实践中，都是用注解来编写切面类，这些注解是AspectJ的jar包提供的，但对于AOP功能的实现，用的是JDK或CGLIB的动态代理。因此，Spring AOP和AspectJ的关系就是，Spring用到了AspectJ的注解，但没有用它的语法和编译器，也没有用AspectJ的静态代理来实现功能。</p>
 <h1 id="JDK和CGLIB"><a href="#JDK和CGLIB" class="headerlink" title="JDK和CGLIB"></a>JDK和CGLIB</h1><ol>
 <li>JDK动态代理。只能代理实现了接口的类。上面代码所展现的就是这个机制。它是用Proxy.newProxyInstance()方法生成代理类，用InvocationHandler向代理类织入AOP逻辑</li>
-<li>CGLIB动态代理。不要求被代理类必须实现接口，但不能代理final类。它是用Enhancer类创建子类（底层是用字节码创建子类），用MethodInterceptor向子类织入AOP逻辑</li>
+<li>CGLIB动态代理。不要求被代理类必须实现接口，但不能代理final类。它是用Enhancer类创建<em>被代理类的子类</em>作为代理类，底层是用字节码创建子类，用MethodInterceptor向子类织入AOP逻辑</li>
 </ol>
 <p>在SpringBoot2.0之前，Spring默认用JDK动态代理，只有当被代理类没有实现接口时，Spring才用CGLIB动态代理。在SpringBoot2.0之后，无论被代理类是否实现接口，Spring默认都用CGLIB动态代理。</p>
 <blockquote>
