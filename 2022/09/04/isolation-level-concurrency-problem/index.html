@@ -1,0 +1,102 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="隔离级别与脏读等并发问题"><meta name="keywords" content=""><meta name="author" content="yunnight"><meta name="copyright" content="yunnight"><title>隔离级别与脏读等并发问题 | yunnight</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.7.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"We didn't find any results for the search: ${query}"}},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  }
+} </script><meta name="generator" content="Hexo 4.2.0"></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#事务四要素ACID"><span class="toc-number">2.</span> <span class="toc-text">事务四要素ACID</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#隔离级别"><span class="toc-number">3.</span> <span class="toc-text">隔离级别</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#并发问题"><span class="toc-number">4.</span> <span class="toc-text">并发问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#隔离级别的实现方式"><span class="toc-number">5.</span> <span class="toc-text">隔离级别的实现方式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#基于锁的并发控制"><span class="toc-number">5.1.</span> <span class="toc-text">基于锁的并发控制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#无锁的并发控制（MVCC）"><span class="toc-number">5.2.</span> <span class="toc-text">无锁的并发控制（MVCC）</span></a></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://raw.githubusercontent.com/yunnight/pics/master/blog_avatar.jpg"></div><div class="author-info__name text-center">yunnight</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">42</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">10</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">Categories</span><span class="pull-right">12</span></a></div></div></div><div id="content-outer"><div class="plain" id="top-container"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">yunnight</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> Search</span></a></span></div></div><div class="layout" id="content-inner"><article id="post"><div class="plain" id="post-title">隔离级别与脏读等并发问题</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2022-09-04</time><span class="post-meta__separator">|</span><i class="fa fa-inbox" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"> 数据库</a></div><div class="article-container" id="post-content"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>以下内容是从 <a href="https://www.aneasystone.com/archives/2017/10/solving-dead-locks-one.html" target="_blank" rel="noopener">https://www.aneasystone.com/archives/2017/10/solving-dead-locks-one.html</a> 中提取出的关键内容，同时也有自己的补充。</p>
+<h1 id="事务四要素ACID"><a href="#事务四要素ACID" class="headerlink" title="事务四要素ACID"></a>事务四要素ACID</h1><p>事务四要素，也叫“一个可靠的事务必须具备的四个特性”，分别是：</p>
+<ul>
+<li>原子性（Atomicity）：要么全部完成，要么全部不完成</li>
+<li>一致性（Consistency）：一个事务单元需要提交之后才会被其他事务可见</li>
+<li>隔离性（Isolation）：并发事务之间不会互相影响，设立了不同程度的<strong>隔离级别</strong>，通过适度的破坏一致性，得以提高性能</li>
+<li>持久性（Durability）：事务提交后即持久化到磁盘不会丢失</li>
+</ul>
+<blockquote>
+<p>和数据库有关的几个理论缩写：ACID、CAP、BASE。他们的区别可以看这篇博客：<a href="https://www.cnblogs.com/minikobe/p/11137256.html" target="_blank" rel="noopener">https://www.cnblogs.com/minikobe/p/11137256.html</a> 。总的来说，ACID不考虑数据库是否是分布式的，都要求强一致性。CAP和BASE考虑的是分布式数据库在一致性问题上的取舍。</p>
+</blockquote>
+<h1 id="隔离级别"><a href="#隔离级别" class="headerlink" title="隔离级别"></a>隔离级别</h1><p>在ACID中的“隔离性”，规定了以下4种“隔离级别”。</p>
+<table>
+<thead>
+<tr>
+<th>隔离级别</th>
+<th align="left">概念</th>
+<th align="left">会出现的并发问题</th>
+<th align="left">不会出现的/解决的并发问题</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>读未提交 Read Uncommitted</td>
+<td align="left">可以读取到未提交的记录</td>
+<td align="left">脏读、幻读、不可重复读（所有问题都可能出现）</td>
+<td align="left">无</td>
+</tr>
+<tr>
+<td>读已提交 Read Committed</td>
+<td align="left">事务中只能看到已提交的修改 <br/>大部分数据库的默认隔离级别</td>
+<td align="left">幻读、不可重复读</td>
+<td align="left">脏读</td>
+</tr>
+<tr>
+<td>可重复读 Repeatable Read</td>
+<td align="left">在同一个事务内的查询结果都是一致的<br/> MySQL InnoDb 默认的隔离级别</td>
+<td align="left">幻读</td>
+<td align="left">脏读、不可重复读</td>
+</tr>
+<tr>
+<td>序列化 Serializable</td>
+<td align="left">所有事务串行执行，是最高隔离级别</td>
+<td align="left">无</td>
+<td align="left">所有问题都解决</td>
+</tr>
+</tbody></table>
+<p>它们可以达到的隔离效果从低到高，所以它们每个都会比上一个隔离级别多解决一个问题。</p>
+<h1 id="并发问题"><a href="#并发问题" class="headerlink" title="并发问题"></a>并发问题</h1><p>并发是指对相同的一条或多条记录同时操作。在不采取任何措施的情况下，事务会出现的并发问题有4种：</p>
+<ol>
+<li>脏读<br>事务一执行<code>UPDATE</code><strong>未提交</strong>，事务二执行<code>SELECT</code>读到了事务一UPDATE未提交的结果</li>
+<li>不可重复读<br>事务一执行<code>UPDATE</code><strong>并提交</strong>，事务二中依次执行两句相同的<code>SELECT</code>，第一句在事务一UPDATE前读，第二句在事务一UPDATE并提交后读，两句相同的SELECT结果不一致</li>
+<li>幻读<br>事务一执行<code>INSERT/DELETE</code>并提交，事务二中依次执行两句相同的<code>SELECT COUNT(1)</code>，第一句在事务一 INSERT/DELETE 前读，第二句在事务一 INSERT/DELETE 并提交后读，两句相同的SELECT COUNT(1)结果不一致。它与“不可重复读”的区别在于，“不可重复读”关注两次SELECT的记录内容是否一致，“幻读”关注两次SELECT的记录总数是否一致</li>
+<li>丢失更新<br>包括“提交覆盖”和“回滚覆盖”。提交覆盖指，事务一先SELECT后再根据SELECT结果进行UPDATE，事务二在事务一 两次操作的间隙中UPDATE并提交，事务一UPDATE提交后覆盖了事务二的UPDATE。回滚覆盖类似，就是事务一的回滚覆盖了事务二的UPDATE。 </li>
+</ol>
+<p>这四种隔离级别，应该根据具体的业务来取舍，如果某个系统的业务里根本就没有重复读的场景，完全可以将数据库的隔离级别设置为“读已提交(RC)”，这样可以最大程度的提高数据库的并发性。</p>
+<blockquote>
+<p>“回滚覆盖”问题由数据库本身解决，不需要用户考虑。“提交覆盖”问题，在MySQL的“可重复读(RR)”隔离级别下没有解决，原因是：<br>因为 MySQL 的实现和 ANSI-SQL 标准之间的差异，在标准的传统实现中，RR 隔离级别是使用持续的 X 锁（写锁）和持续的 S 锁（读锁）来实现的，由于是持续的 S 锁，所以避免了其他事务有写操作（加了读锁的表会拒绝写请求），也就不存在提交覆盖问题。但是 MySQL 在 RR 隔离级别下，普通的 SELECT 语句没有任何的加锁，和标准的 RR 是不一样的。如果要让 MySQL 在 RR 隔离级别下不发生提交覆盖，可以使用 SELECT … LOCK IN SHARE MODE 或者 SELECT … FOR UPDATE （这样的SQL会加读锁）。</p>
+</blockquote>
+<h1 id="隔离级别的实现方式"><a href="#隔离级别的实现方式" class="headerlink" title="隔离级别的实现方式"></a>隔离级别的实现方式</h1><h2 id="基于锁的并发控制"><a href="#基于锁的并发控制" class="headerlink" title="基于锁的并发控制"></a>基于锁的并发控制</h2><p>传统的隔离级别是基于锁实现的，这种方式叫做 基于锁的并发控制（Lock-Based Concurrent Control，简写 LBCC）。通过对读写操作加不同的锁，以及对释放锁的时机进行不同的控制，就可以实现四种隔离级别。</p>
+<p>锁的种类见这里（直接到目录-锁机制）：<a href="https://yunnight.github.io/2020/05/16/mysql-note/">https://yunnight.github.io/2020/05/16/mysql-note/</a></p>
+<p>四种隔离级别的加锁策略如下：</p>
+<ul>
+<li>读未提交<br>有很多人认为这个隔离级别不需要加任何锁，这其实是错误的，我们上面讲过，有一种并发问题在任何隔离级别下都不允许存在，那就是“回滚覆盖”，如果不对写操作加<strong>持续 X 锁</strong>，当两个事务同时去写某条记录时，可能会出现回滚覆盖问题。对读操作不加锁。</li>
+<li>读已提交<br>它是为了解决脏读问题，只能读取已提交的记录，要怎么做才可以保证事务中的读操作读到的记录都是已提交的呢？很简单，对读操作加上 S 锁，这样如果其他事务有正在写的操作，必须等待写操作提交之后才能读，因为 S 和 X 互斥，如果在读的过程中其他事务想写，也必须等事务读完之后才可以。这里的 S 锁是一个<strong>临时 S 锁</strong>，表示事务读完之后立即释放该锁，可以让其他事务继续写。对写操作加 “持续X锁”</li>
+<li>可重复读<br>为了让事务可以重复读，“读已提交”时加在读操作的<strong>临时 S 锁</strong>变成了<strong>持续 S 锁</strong>，也就是直到事务结束时才释放该锁，这可以保证整个事务过程中，其他事务无法进行写操作，所以每次读出来的记录是一样的。对写操作加 “持续X锁”</li>
+<li>序列化（Serializable）<br>为了解决幻读问题，行级锁做不到，需使用表级锁。</li>
+</ul>
+<hr>
+<blockquote>
+<p>两段锁协议（2-phase locking，简称 2PL）</p>
+</blockquote>
+<p>没有使用这个协议时，假设一个事务中先是对记录A的读，再是对记录B的写，则先取A的读锁，读完A即释放，再取B的写锁，写完B即释放。</p>
+<p>而这个协议，将事务中的加锁和解锁明确地分成两个阶段：加锁阶段、解锁阶段。<br>加锁阶段：事务在读数据前加S锁，写数据前加X锁，加锁不成功则等待，加锁成功才继续执行,，且加锁后就不能做解锁。即上面的例子中，在这个阶段会先后取A的读锁、B的写锁，在这之间不会释放A的读锁<br>解锁阶段：在该阶段只能进行解锁而不能再进行加锁操作。即上面的例子中，在这个阶段先后释放A的读锁、B的写锁，在这之间不会加任何锁。</p>
+<p>若并发执行的所有事务均遵守两段锁协议，则对这些事务的任何并发调度策略都是序列化的。 </p>
+<p>两段锁协议不能防止死锁，因为两段锁协议并不要求事务必须一次将所有要使用的数据全部加锁，因此遵守两段锁协议的事务可能发生死锁。</p>
+<p>一次封锁法，就是 MySQL MyISAM 引擎使用的方式，它也遵循了“两段锁协议”，并且它可以避免死锁，但影响并发性能。</p>
+<p>死锁的产生、MyISAM 引擎不会产生死锁的原因，见博客《MYSQL笔记》<a href="https://yunnight.github.io/2020/05/16/mysql-note">https://yunnight.github.io/2020/05/16/mysql-note</a></p>
+<hr>
+<h2 id="无锁的并发控制（MVCC）"><a href="#无锁的并发控制（MVCC）" class="headerlink" title="无锁的并发控制（MVCC）"></a>无锁的并发控制（MVCC）</h2><p>MySQL 中采用的“无锁的并发控制”技术是：多版本并发控制（Multi-Version Concurrent Control，简写 MVCC）</p>
+<p>虽然数据库的四种隔离级别通过 LBCC 技术都可以实现，但是它最大的问题是它只实现了并发的读读，对于并发的读写还是冲突的，写时不能读，读时不能写（因为读锁写锁互斥），当读写操作都很频繁时，数据库的并发性将大大降低，针对这种场景，MVCC 技术应运而生。</p>
+<p>MySQL 只有支持事务的 InnoDB 引擎支持 MVCC，该引擎实现 MVCC 的原理是：<br>InnoDB 中，事务在写一条记录时会将其拷贝一份生成这条记录的一个原始拷贝（这份拷贝数据也叫<strong>快照数据</strong>），写操作同样还是会对原记录加锁，但是读操作会读取未加锁的拷贝出的新记录，这就保证了读写并行。要注意的是，生成的拷贝数据存放于<code>undo log</code>，该数据通过“回滚指针”与原数据关联，若写操作修改原记录失败，会用 undo log 中的数据恢复原记录，所以 undo log 也是实现事务回滚的关键技术。</p>
+<p>InnoDB 中只有 RC（读已提交）和 RR（可重复读）这两个隔离级别才有 MVCC。它们在 MVCC 机制作用下的表现也不同。原博客中做了个实验发现：</p>
+<ul>
+<li>RR（可重复读）时，事务二总是读取事务一开始时的那个版本，即使事务一已提交（写锁已释放）</li>
+<li>RC（读已提交）时，事务二总是读取目标记录的最新版本，如果该记录被锁住（事务一未提交，写锁未释放），则读取该记录最新的一次快照</li>
+</ul>
+<p>由于事务二读取的都是快照数据，并不会被写操作阻塞，所以这种读操作称为<strong>快照读（Snapshot Read）</strong>，也叫<strong>非阻塞读（Nonlocking Read）</strong>。RR 隔离级别下的叫做<strong>一致性非阻塞读（Consistent Nonlocking Read）</strong>。在InnoDB 中，普通 SELECT 语句不会加任何锁，这种就是快照读。（实验例子中的事务二就是用的普通 SELECT 语句）</p>
+<p>除了快照读 ，MySQL 还提供了另一种读取方式：<strong>当前读（Current Read）</strong>，也叫<strong>加锁读（Locking Read）</strong>或者<strong>阻塞读（Blocking Read）</strong>，这种读操作读的不再是数据的快照版本，而是数据的最新版本，并会对数据加锁。在InnoDB 中，可以给 SELECT 语句显式加锁，如<code>SELECT … LOCK IN SHARE MODE</code>（加行读锁）或<code>SELECT … FOR UPDATE</code>（加行写锁），这种就是当前读。</p>
+</div></article><div class="post-meta__tag-list"></div><nav id="pagination"><div class="next-post pull-right"><a href="/2022/09/03/tidb-note/"><span>TiDB笔记</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer><div class="layout" id="footer"><div class="copyright">&copy;2013 - 2022 By yunnight</div><div class="framework-info"><span>Driven - </span><a href="http://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody" target="_blank" rel="noopener"><span>Melody</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.7.0"></script><script src="/js/fancybox.js?version=1.7.0"></script><script src="/js/sidebar.js?version=1.7.0"></script><script src="/js/copy.js?version=1.7.0"></script><script src="/js/fireworks.js?version=1.7.0"></script><script src="/js/transition.js?version=1.7.0"></script><script src="/js/scroll.js?version=1.7.0"></script><script src="/js/head.js?version=1.7.0"></script><script src="/js/search/local-search.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">Local search</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts"></div></div></div><hr><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>Powered by</span> <a href="https://github.com/wzpan/hexo-generator-search" target="_blank" rel="noopener" style="color:#49B1F5;">hexo-generator-search</a></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>
