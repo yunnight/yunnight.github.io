@@ -7,23 +7,23 @@
     error: 'Copy error',
     noSupport: 'The browser does not support'
   }
-} </script><meta name="generator" content="Hexo 4.2.0"></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#关键词"><span class="toc-number">1.</span> <span class="toc-text">关键词</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#TiDB架构"><span class="toc-number">2.</span> <span class="toc-text">TiDB架构</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://raw.githubusercontent.com/yunnight/pics/master/blog_avatar.jpg"></div><div class="author-info__name text-center">yunnight</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">42</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">10</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">Categories</span><span class="pull-right">12</span></a></div></div></div><div id="content-outer"><div class="plain" id="top-container"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">yunnight</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> Search</span></a></span></div></div><div class="layout" id="content-inner"><article id="post"><div class="plain" id="post-title">TiDB笔记</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2022-09-03</time><span class="post-meta__separator">|</span><i class="fa fa-inbox" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"> 数据库</a></div><div class="article-container" id="post-content"><h1 id="关键词"><a href="#关键词" class="headerlink" title="关键词"></a>关键词</h1><p>TiDB 数据库是：由 PingCAP 公司研发的国产数据库、开源、分布式、支持HTAP、NewSQL数据库、关系型数据库、兼容MySQL语法</p>
+} </script><meta name="generator" content="Hexo 4.2.0"></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#大致介绍"><span class="toc-number">1.</span> <span class="toc-text">大致介绍</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#TiKV"><span class="toc-number">2.</span> <span class="toc-text">TiKV</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#RocksDB"><span class="toc-number">2.1.</span> <span class="toc-text">RocksDB</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TiKV中的Region"><span class="toc-number">2.2.</span> <span class="toc-text">TiKV中的Region</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TiKV中的raftdb"><span class="toc-number">2.3.</span> <span class="toc-text">TiKV中的raftdb</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TiKV中的Raft选举"><span class="toc-number">2.4.</span> <span class="toc-text">TiKV中的Raft选举</span></a></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://raw.githubusercontent.com/yunnight/pics/master/blog_avatar.jpg"></div><div class="author-info__name text-center">yunnight</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">42</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">10</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">Categories</span><span class="pull-right">12</span></a></div></div></div><div id="content-outer"><div class="plain" id="top-container"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">yunnight</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> Search</span></a></span></div></div><div class="layout" id="content-inner"><article id="post"><div class="plain" id="post-title">TiDB笔记</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2022-09-03</time><span class="post-meta__separator">|</span><i class="fa fa-inbox" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"> 数据库</a></div><div class="article-container" id="post-content"><h1 id="大致介绍"><a href="#大致介绍" class="headerlink" title="大致介绍"></a>大致介绍</h1><p>TiDB 数据库是由 PingCAP 公司研发的国产数据库，它的关键字有：开源、分布式、支持HTAP、NewSQL数据库、关系型数据库、兼容MySQL语法</p>
 <p>官方文档：<a href="https://docs.pingcap.com/zh/tidb/v6.2/overview" target="_blank" rel="noopener">https://docs.pingcap.com/zh/tidb/v6.2/overview</a></p>
 <p>TiDB 支持HTAP的意思是：<br>企业生产的数据越来越多，其规模可能达到数百 TB 甚至 PB 级别，传统的解决方案是通过 OLTP 型数据库处理在线联机交易业务，通过 ETL 工具将数据同步到 OLAP 型数据库进行数据分析，这种处理方案存在存储成本高、实时性差等多方面的问题。TiDB 在 4.0 版本中引入<strong>列存储</strong>引擎 TiFlash 结合<strong>行存储</strong>引擎 TiKV 构建真正的 HTAP 数据库，在增加少量存储成本的情况下，可以在同一个系统中做联机交易处理、实时数据分析，极大地节省企业的成本。（来自官方文档）</p>
 <blockquote>
-<p>什么是HTAP</p>
+<p>1.什么是HTAP？</p>
 </blockquote>
 <p>HTAP = OLTP(联机事务处理) + OLAP(联机分析处理)。当今的数据处理大致可以分成两大类：OLTP和OLAP。<br>OLTP 是传统的关系型数据库的主要应用，主要是基本的、日常的事务处理，不用于决策，一次性查询或修改的数据量没有OLAP大，因为用户数多，所以对响应时间要求高。普通的Java Web应用对数据库进行增删改查就是OLTP；<br>OLAP 是数据仓库系统的主要应用，一次性操作的是大量数据，支持多维分析操作（钻取、切片和切块、旋转），得到直观的查询结果，用于分析决策。</p>
 <blockquote>
-<p>什么是NewSQL数据库？</p>
+<p>2.什么是NewSQL数据库？</p>
 </blockquote>
 <p>NewSQL 是对各种新的可扩展/高性能数据库的简称，这类数据库不仅具有 NoSQL 对海量数据的存储管理能力，还保持了传统数据库支持ACID等特性。</p>
 <blockquote>
-<p>什么是行存储、列存储？</p>
+<p>3.什么是行存储、列存储？</p>
 </blockquote>
 <p>简单地说，行存储就是数据在“页”中是按原本数据表的一行一行数据存储的，例如 MySQL、Oracle。列存储中数据是按原本数据表的一列一列存储的。行存储适用于OLTP场景，列存储适用于OLAP场景。<br>行存储：<a href="https://blog.csdn.net/li1325169021/article/details/121044179" target="_blank" rel="noopener">https://blog.csdn.net/li1325169021/article/details/121044179</a><br>列存储：<a href="https://www.jianshu.com/p/d1114dd4f77a" target="_blank" rel="noopener">https://www.jianshu.com/p/d1114dd4f77a</a></p>
-<h1 id="TiDB架构"><a href="#TiDB架构" class="headerlink" title="TiDB架构"></a>TiDB架构</h1><p>TiDB整体架构（官方文档）： <a href="https://docs.pingcap.com/zh/tidb/v6.2/tidb-architecture" target="_blank" rel="noopener">https://docs.pingcap.com/zh/tidb/v6.2/tidb-architecture</a></p>
-<p>从官方文档中提取出关键内容并加以解读；</p>
+<hr>
+<p>TiDB 架构：</p>
 <ul>
 <li><p>TiDB Server<br>SQL 层，对外暴露 MySQL 协议的连接 endpoint，负责接受客户端的连接，执行 SQL 解析和优化，最终生成分布式执行计划。它本身不存储数据，只是生成执行计划后将执行计划转发给底层的存储节点 TiKV（或 TiFlash）。所以它可以很方便的扩展成集群，处理的更多客户端连接。</p>
 </li>
@@ -34,7 +34,144 @@
 <li><p>PD (Placement Driver) Server<br>整个 TiDB 集群的元信息管理模块，负责存储每个 TiKV 节点实时的数据分布情况和集群的整体拓扑结构，提供 TiDB Dashboard 管控界面，并为分布式事务分配事务 ID。PD 不仅存储元信息，同时还会根据 TiKV 节点实时上报的数据分布状态，下发数据调度命令给具体的 TiKV 节点，可以说是整个集群的“大脑”。此外，PD 本身也是由至少 3 个节点构成，拥有高可用的能力。建议部署奇数个 PD 节点。</p>
 </li>
 </ul>
-</div></article><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/TiDB/">TiDB</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2022/09/04/isolation-level-concurrency-problem/"><i class="fa fa-chevron-left">  </i><span>隔离级别与脏读等并发问题</span></a></div><div class="next-post pull-right"><a href="/2022/08/15/classloader/"><span>ClassLoader碎笔记</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer><div class="layout" id="footer"><div class="copyright">&copy;2013 - 2022 By yunnight</div><div class="framework-info"><span>Driven - </span><a href="http://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody" target="_blank" rel="noopener"><span>Melody</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.7.0"></script><script src="/js/fancybox.js?version=1.7.0"></script><script src="/js/sidebar.js?version=1.7.0"></script><script src="/js/copy.js?version=1.7.0"></script><script src="/js/fireworks.js?version=1.7.0"></script><script src="/js/transition.js?version=1.7.0"></script><script src="/js/scroll.js?version=1.7.0"></script><script src="/js/head.js?version=1.7.0"></script><script src="/js/search/local-search.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+<h1 id="TiKV"><a href="#TiKV" class="headerlink" title="TiKV"></a>TiKV</h1><p>TiKV 中重要的关键词：</p>
+<ul>
+<li>RocksDB</li>
+<li>Raft</li>
+<li>MVCC</li>
+<li>两段锁协议</li>
+</ul>
+<p>下面的介绍会说明这些关键词的含义和实现细节。</p>
+<h2 id="RocksDB"><a href="#RocksDB" class="headerlink" title="RocksDB"></a>RocksDB</h2><p>TiKV 底层的存储引擎是 RocksDB，每个 TiKV 实例中有两个 RocksDB 实例，一个用于存储 Raft 日志(raft log)，通常被称为“raftdb”；另一个用于存储数据以及 MVCC 信息，通常被称为“kvdb”。RocksDB 是 Facebook 基于 LevelDB 开发的一款提供键值存储与读写功能的 LSM-tree 架构引擎。</p>
+<p>什么是 LevelDB 和 LSM-tree？</p>
+<p>LevelDB 是谷歌开发的键值对数据库，数据的存储结构就是 LSM-tree（日志结构合并树）。</p>
+<p>MySQL 使用<strong>B+树</strong>作为存储结构，B+树最大的性能问题是会产生大量的<strong>随机读写</strong>，逻辑上连续的两个叶子节点在物理上往往不连续，做范围查询时，可能要读多个叶子节点，就是随机读；如果新插入的数据存储在磁盘上也不连续，就是随机写。</p>
+<p>LSM-tree 其实不是一个树，而是一种存储数据的机制。在这个机制下，内存中有一个数据结构，可以是红黑树、B+树或跳表（增加了向前指针的链表叫作跳表），磁盘中有多个数据文件，叫<strong>SST (Sorted String Table)文件</strong>。SST 文件是 LSM 树在磁盘中持久化存储的数据结构，它存储了有序的<strong>键值对</strong>。</p>
+<p>LSM 树的优势在于有效地规避了磁盘随机写入问题，但读取时可能需要访问较多的磁盘文件。</p>
+<blockquote>
+<p>PS: 什么是随机读写、顺序读写？<br>随机和顺序读写，是存储器的两种输入输出方式。存储的数据在磁盘中占据空间，对于一个新磁盘，操作系统会将数据文件依次写入磁盘，当有些数据被删除时，就会空出该数据原来占有的存储空间，时间长了，不断的写入、删除数据，就会产生很多零零散散的存储空间，就会造成一个较大的数据文件放在许多不连续的存贮空间上，读写这部分数据时，就是随机读写，磁头要不断的调整磁道的位置，以在不同位置上的读写数据，相对于连续空间上的顺序读写，要耗时很多。</p>
+</blockquote>
+<p>LSM-tree 写数据时，数据先写入内存中的树（树中的数据有序），同时也会写入磁盘中一个日志文件“WAL”(Write Ahead Log)（append only 方式写入），这个文件用途是内存数据丢失时可以用它恢复数据。内存中的树被写满后，后台进程会将这个树写入磁盘形成一个 SST 文件，内存数据被多次写满，磁盘中就有多个 SST 文件。一般情况下，一条数据会被重复写入，那么这条数据在多个 SST 中都会存在，即 SST 文件之间是有交集的。所以，读数据时需要从新到旧遍历所有 SST 文件（因为不知道所查的数据在哪个文件里），这就是读性能下降的原因。若一个 key 在多个文件中都存在，那么只查询出它的第一个版本。</p>
+<p>LevelDB 有一个后台线程负责整理磁盘中的多个 SST 文件，以提高读的效率（这个操作也叫“压缩-Compact”）。LSM-tree 中有两种压缩策略<code>Size-Tiered Compaction Strategy</code>和<code>Leveled Compaction Strategy</code>，RocksDB 和 LevelDB 采用后者。整理后，SST 文件会按照如下图所示的层级排列：</p>
+<img src="/2022/09/03/tidb-note/SST_level.PNG" class="" title="SST_level">
+
+<p>图中的<code>memtable</code>和<code>immutable memtable</code>都在内存中，都是有序的数据结构，写数据时先写入 memtable，当 memtable 的容量达到阈值时，便会转换成一个不可修改的 immutable memtable。它同 memtable 的结构定义一样。两者的区别只是 immutable memtable 是只读的。后台线程会将 immutable memtable 写入到磁盘中形成一个新的 SST 文件，随后便销毁 immutable memtable，这个操作就是图中标出的<code>minor compaction</code>。</p>
+<p>图中的 Level-0 层级的 SST 文件，是多次 minor compaction 操作的产物，它们之间的数据可能是有交集的（因为同个 key 的数据可能被多次修改）。</p>
+<p>当 Level-0 的文件数目超过一个设定的数值，会将这个层级所有的 SST 文件中的所有数据进行合并和切分，重新形成多个 SST 文件，这些新文件中的数据不会有交集（相同 key 的数据做了合并），这些新的 SST 文件被移到了下个层级 Level-1。如果 Level-1 本来已经存在 SST 文件了，那么 Level-0 的所有文件会和 Level-1 中的所有文件一起做合并和切分，产生的新文件在 Level-1 中。</p>
+<p>在 Level-0 之后的层级，触发合并到下一层的条件是这个层级的 SST 文件的总大小超过一个设定的数值，就从这个层级中选择一个文件与下一个层级的部分文件合并。当前层级选择文件的方式就是“轮询”，这样每个文件都有机会被合并。</p>
+<p>假设现在是 Level-1 向 Level-2 合并，Level-2 选出的参与合并的文件，是和 Level-1 指定的那个文件中的数据的“key range”有重叠的那些文件。合并的原理是：？？？？？？？？</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>未完整，这部分文字不理解，什么是多路归并</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>对多个文件采用<strong>多路归并</strong>排序的方式，依次找出其中最小的 key 记录，也就是对多个文件中的所有记录重新进行排序。遍历每条键值对数据，判断这个 key 是否还需要保存，如果判断没有保存价值，那么直接抛掉，如果觉得还需要继续保存，那么就将其写入 Level-2 层中新生成的一个 SST 文件中，最后删除这两个层级中参与合并的文件。</p>
+<p>判断 key 是否还需要保存的逻辑是，如果这个 key 在更低级别的level中出现过，那说明他有更新的value存储，我们需要进行抛弃。？？？？</p>
+<p>RocksDB 的原理是，用户写入的键值对会先写入磁盘上的<strong>WAL</strong>，然后再写入内存中的<strong>跳表</strong>（SkipList，这部分结构又被称作 MemTable）。【这里的“跳表”就是上面提到的 LSM 在内存中的树</p>
+<p>内存中的数据达到一定阈值后，会刷到磁盘上生成<strong>SST</strong>文件 (Sorted String Table)，SST 又分为多层（默认至多 6 层），每一层的数据达到一定阈值后会挑选一部分 SST 合并到下一层，每一层的数据是上一层的 10 倍（因此 90% 的数据存储在最后一层）。</p>
+<p>RocksDB 允许用户创建多个 ColumnFamily ，这些 ColumnFamily 各自拥有独立的内存跳表以及 SST 文件，但是共享同一个 WAL 文件，这样的好处是可以根据应用特点为不同的 ColumnFamily 选择不同的配置，但是又没有增加对 WAL 的写次数。</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<h2 id="TiKV中的Region"><a href="#TiKV中的Region" class="headerlink" title="TiKV中的Region"></a>TiKV中的Region</h2><p>TiDB 底层是键值对存储，外面系统读取和写入时看到的一行一行的关系型数据，是 TiDB 按照它的机制转换的，每一行数据对应一个 key-value 对，key 中包含了“表ID”和“记录的主键ID”，于是可以做到这条数据的 key 在整个 TiDB 中唯一。一张表有多行数据也即有多条 key-value 对，这些数据会被划分成多个<strong>Region</strong>，即一张表的数据会跨多个 Region，Region 中的数据是有序的（按 key 排序），每个 Region 都可以用 [startKey, endKey) 这样的左开右闭区间表示它的数据范围。</p>
+<p>随着 Region 中数据更新，如 insert 增加数据、update 使数据的 value 变大变小、delete 删除数据，Region 中的数据总量如果变得太小，会和其他 Region 合并；如果变得太大（超过144M），会被分裂成多个 Region。</p>
+<p>同时，TiDB 使用了名叫“Raft”的分布式一致性协议，每个 Region 一共存在3个副本（默认是3个），每个副本一般要设置分布在不同的 TiKV 实例上（有参数配置，为了高可用）。其中一个副本的角色是 leader，其余副本角色是 follower。默认配置下，读写都只发生在 leader，follower 只负责在写操作中复制 leader 的数据。</p>
+<p>leader 和它的 follower 们组成一个“raft group”，多个“raft group”叫作“multi-raft”。</p>
+<p>？？？？？？？？？？？leader和follower之间怎么互相知道？？？？？？？？？？？</p>
+<p>TiDB 如何使用 Raft 的原理在下一节详解。</p>
+<h2 id="TiKV中的raftdb"><a href="#TiKV中的raftdb" class="headerlink" title="TiKV中的raftdb"></a>TiKV中的raftdb</h2><p>TiKV 实例中有两个 RocksDB 实例，其中一个用于存储 Raft 日志(raft log)，通常被称为“raftdb”。另一个用于存储数据，通常被称为“kvdb”。</p>
+<p>Raft 是一个一致性协议，它提供了几个重要的功能：</p>
+<ol>
+<li>Leader（主副本）选举</li>
+<li>成员变更（如添加副本、删除副本、转移 Leader 等操作）</li>
+<li>日志复制</li>
+</ol>
+<p>TiKV 利用 Raft 来做数据复制，每个数据变更都会落地为一条 Raft 日志，通过 Raft 的日志复制功能，将数据安全可靠地同步到“raft group”的每一个节点中。不过在实际写入中，根据 Raft 的协议，只需要同步复制到多数节点，即可安全地认为数据写入成功。</p>
+<p>因为只有写数据涉及到数据同步，所以下面要讲的“Raft 日志复制”只发生在写数据时。</p>
+<p>我们的 DML SQL 会先被 TiDB Server 转化为“执行计划”</p>
+<p>Raft 日志复制总共需要五个阶段：</p>
+<ul>
+<li><p>Propose<br>  要写入的数据（这里不用考虑它是个什么格式）给到 leader region，leader 将它转成“raft log”的格式。raft log 格式类似于：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">4_1, log&#123;PUT key&#x3D;1, name&#x3D;TOM&#125; -- &#39;4_1&#39;中的&#39;4&#39;是 region 的编号，&#39;1&#39;是该条日志的序号，后面是操作，表示将 key&#x3D;1 的数据中的 name 字段改为&#39;TOM&#39;（也可能是新增一条 key&#x3D;1 的数据）</span><br><span class="line">4_2, log&#123;PUT key&#x3D;2, name&#x3D;CANDY&#125;</span><br><span class="line">4_3, log&#123;DEL key&#x3D;3&#125; -- 这个是 DELETE SQL 的日志格式</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Append<br>  leader 将转换好的 raft log 保存到自己所在 TiKV 节点的 raftdb 中，这个操作也叫“将 Raft 日志持久化”</p>
+</li>
+<li><p>Replicate<br>  leader 将 raft log 发给 follower（一条条发还是批量发？？？）这个是 Raft 的功能之一。follower 收到后也经过 Propose+Append 两个阶段，将 raft log 保存到自己所在节点的 raftdb 中，保存成功后会给 leader 回消息表示自己这边的 raft log 持久化成功了</p>
+</li>
+<li><p>Committed<br>  leader 收到多数 follower 的成功回信，认为该 raft log 已经真正持久化成功，给每条 raft log 标记 Committed，还是这个raft log标记Commitred？？？？？？？</p>
+</li>
+<li><p>Apply<br>  leader 将 raft log 中的数据保存到 kvdb 中，（一条一条做？？？？？ </p>
+</li>
+</ul>
+<p>若在 Replicate 阶段中，多数 follower 节点不可用，leader 没有收到回信，那么 leader 会将这一条 raft log（还是整个 raft log？）不会标记成 Committed，就不会持久化到 kvdb 中。</p>
+<p>将数据转为 raft log 的线程来自于线程池 raftstore pool，将 raft log 写入 kvdb 的线程池是 apply pool<br>TiKV 线程池：<a href="https://book.tidb.io/session4/chapter8/threadpool-optimize.html" target="_blank" rel="noopener">https://book.tidb.io/session4/chapter8/threadpool-optimize.html</a></p>
+<p>leader 的 raftstore pool 也负责发生给follower</p>
+<h2 id="TiKV中的Raft选举"><a href="#TiKV中的Raft选举" class="headerlink" title="TiKV中的Raft选举"></a>TiKV中的Raft选举</h2></div></article><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/TiDB/">TiDB</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2022/09/04/isolation-level-concurrency-problem/"><i class="fa fa-chevron-left">  </i><span>隔离级别与脏读等并发问题</span></a></div><div class="next-post pull-right"><a href="/2022/08/15/classloader/"><span>ClassLoader笔记</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer><div class="layout" id="footer"><div class="copyright">&copy;2013 - 2023 By yunnight</div><div class="framework-info"><span>Driven - </span><a href="http://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody" target="_blank" rel="noopener"><span>Melody</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.7.0"></script><script src="/js/fancybox.js?version=1.7.0"></script><script src="/js/sidebar.js?version=1.7.0"></script><script src="/js/copy.js?version=1.7.0"></script><script src="/js/fireworks.js?version=1.7.0"></script><script src="/js/transition.js?version=1.7.0"></script><script src="/js/scroll.js?version=1.7.0"></script><script src="/js/head.js?version=1.7.0"></script><script src="/js/search/local-search.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
   $('#nav').addClass('is-mobile')
   $('footer').addClass('is-mobile')
   $('#top-container').addClass('is-mobile')
