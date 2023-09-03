@@ -38,9 +38,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Enumeration&lt;URL&gt; urls = (classLoader != <span class="keyword">null</span> ?</span><br><span class="line">		classLoader.getResources(FACTORIES_RESOURCE_LOCATION) :</span><br><span class="line">		ClassLoader.getSystemResources(FACTORIES_RESOURCE_LOCATION)); <span class="comment">// FACTORIES_RESOURCE_LOCATION = "META-INF/spring.factories"</span></span><br></pre></td></tr></table></figure>
 
 <p><strong>注意：</strong>这个方法返回的<code>CompoundEnumeration</code>对象中，还看不出文件所在的绝对路径，只能看出 ClassLoader 准备在哪些路径下查找目标文件。</p>
-<blockquote>
 <p>CompoundEnumeration类的特点：<br><code>CompoundEnumeration</code> 是一个用于处理多个 <code>Enumeration</code> 对象的类。<code>CompoundEnumeration</code> 的构造器接受一个 <code>Enumeration</code> 数组，并且将它们合并成一个新的 <code>Enumeration</code>。在 <code>nextElement()</code> 方法中依次返回每个 <code>Enumeration</code> 对象中的每个枚举元素，直到所有<code>Enumeration</code>对象以及它们中的元素遍历结束。<br>在调用 <code>nextElement()</code> 方法时，如果当前 <code>Enumeration</code> 还有元素，则返回该元素。如果当前 <code>Enumeration</code> 没有元素，则将指针移到下一个 <code>Enumeration</code>，并返回该 <code>Enumeration</code> 的第一个元素。<br>PS: 其实可以用 List<Object> 代替 Enumeration<Object>[] ，因为 List 也能遍历到每个元素。</p>
-</blockquote>
 <p>那么是哪些路径呢？从这个方法可以看出，tmp[0]是当前加载器的父加载器返回的，tmp[1]才是当前加载器返回的，也就是说这个方法也是按照“双亲委派模型”编写的，返回的路径中既包含父加载器的路径，也包含当前加载器的路径。<br>当前加载器在一般情况下就是<strong>应用程序类加载器</strong>，所以它的这个方法返回的路径，就是 启动类加载器+扩展类加载器+应用程序类加载器 3个类加载器负责的路径的并集，即 “JVM系统参数sun.boot.class.path” + “JVM系统参数java.ext.dirs” + “环境变量classpath” 包含的路径的并集！</p>
 <p>在这个方法中，涉及到几个内部类对象的创建：</p>
 <p>一、<code>ClassLoader.getBootstrapResources</code>方法返回的<code>Enumeration&lt;URL&gt;</code>内部类对象，即<strong>启动类加载器</strong>返回的路径</p>
